@@ -16,22 +16,22 @@
   "author": "imorente",
   "license": "MIT",
   "devDependencies": {
-    "babel-loader": "^7.1.4",
-    "concurrently": "^3.5.1",
-    "dotenv": "^5.0.1",
-    "extract-loader": "^2.0.1",
-    "file-loader": "^1.1.11",
-    "html-loader": "^0.5.5",
-    "html-webpack-plugin": "^3.2.0",
-    "markdown-magic": "^0.1.25",
+    "babel-loader": "^9.1.2",
+    "concurrently": "^8.2.0",
+    "dotenv": "^16.3.1",
+    "extract-loader": "^5.1.0",
+    "file-loader": "^6.2.0",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.3",
+    "markdown-magic": "^2.6.1",
     "netlify-lambda": "^0.4.0",
-    "node-fetch": "^2.1.2",
-    "webpack": "^4.30.0",
-    "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "^3.3.1",
+    "node-fetch": "^3.3.1",
+    "webpack": "^5.87.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1",
     "xml2js-es6-promise": "^1.1.1"    
   },
   "dependencies": {
-    "normalize.css": "^8.0.0"
+    "normalize.css": "^8.0.1"
   }
 }
