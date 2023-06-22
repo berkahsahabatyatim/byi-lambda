@@ -41,11 +41,10 @@ export function handler(event, context, callback) {
       }
       var body = {}
       var campaignId = ""
-      var amount = 0
+      const amount = Number(res.gross_amount)
       try {
         const cust = JSON.parse(res.custom_field3)
         campaignId = cust.campaignId
-        amount = cust.amount
         body = {
           "fields": {
             "name": {
@@ -58,7 +57,7 @@ export function handler(event, context, callback) {
               "booleanValue": cust.isAnonym
             },
             "amount": {
-              "integerValue": cust.amount
+              "integerValue": amount
             },
             "message": {
               "stringValue": cust.message
