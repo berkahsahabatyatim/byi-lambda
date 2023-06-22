@@ -21,7 +21,7 @@ export function handler(event, context, callback) {
     if (error) {
       callback(null, {
         statusCode: 500,
-        body: 'unable generate token'
+        body: `unable generate token ${error}`
       })
     } else if (tokens.access_token === null) {
       console.log('Provided service account does not have permission to generate access tokens')
