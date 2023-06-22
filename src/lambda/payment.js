@@ -10,7 +10,7 @@ const scopes = [
 const jwtClient = new google.auth.JWT(
   NEXT_PUBLIC_EMAIL,
   null,
-  NEXT_PUBLIC_PPK,
+  NEXT_PUBLIC_PPK.replace(/\\n/g, '\n'),
   scopes
 )
 
