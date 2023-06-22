@@ -33,6 +33,12 @@ export function handler(event, context, callback) {
       const accessToken = tokens.access_token
       console.log("dapet ya?", accessToken)
       console.log(`ini body nya ${res.custom_field3}`)
+      if (res.transaction_status != "settlement") {
+        callback(null, {
+          statusCode: 201,
+          body: `ignored`
+        })
+      }
       var body = {}
       var campaignId = ""
       try {
