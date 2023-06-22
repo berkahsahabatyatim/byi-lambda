@@ -19,6 +19,7 @@
   ],
   "dependencies": {
     "dotenv": "^16.3.1",
+    "encoding": "^0.1.13",
     "googleapis": "^118.0.0",
     "node-fetch": "2.6.7"
   },
