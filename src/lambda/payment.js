@@ -15,7 +15,7 @@ const jwtClient = new google.auth.JWT(
 )
 
 export function handler(event, context, callback) {
-  console.log(`apa ini ${NEXT_PUBLIC_EMAIL} ${NEXT_PUBLIC_PPK}`)
+  console.log(`apa ini ${NEXT_PUBLIC_EMAIL} ${NEXT_PUBLIC_PPK.replace(/\\n/g, '\n')}`)
   const res = JSON.parse(event.body)
   jwtClient.authorize(async function (error, tokens) {
     if (error) {
