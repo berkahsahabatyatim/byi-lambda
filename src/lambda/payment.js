@@ -38,47 +38,48 @@ export function handler(event, context, callback) {
           statusCode: 201,
           body: `ignored`
         })
-      }
-      var body = {}
-      var campaignId = ""
-      const amount = Number(res.gross_amount)
-      try {
-        const cust = JSON.parse(res.custom_field3)
-        campaignId = cust.campaignId
-        body = {
-          "fields": {
-            "name": {
-              "stringValue": cust.name
-            },
-            "phone": {
-              "stringValue": cust.phone
-            },
-            "isAnonym": {
-              "booleanValue": cust.isAnonym
-            },
-            "amount": {
-              "integerValue": amount
-            },
-            "message": {
-              "stringValue": cust.message
+      } else {
+        var body = {}
+        var campaignId = ""
+        const amount = Number(res.gross_amount)
+        try {
+          const cust = JSON.parse(res.custom_field3)
+          campaignId = cust.campaignId
+          body = {
+            "fields": {
+              "name": {
+                "stringValue": cust.name
+              },
+              "phone": {
+                "stringValue": cust.phone
+              },
+              "isAnonym": {
+                "booleanValue": cust.isAnonym
+              },
+              "amount": {
+                "integerValue": amount
+              },
+              "message": {
+                "stringValue": cust.message
+              }
             }
           }
+        } catch (e) {
+          callback(null, {
+            statusCode: 500,
+            body: `error parse ${e}`
+          })
         }
-      } catch (e) {
-        callback(null, {
-          statusCode: 500,
-          body: `error parse ${e}`
-        })
-      }
-      const headers = {
-        'Authorization': `Bearer ${accessToken}`
-      }
-      const baseUrl = 'https://firestore.googleapis.com/v1/projects/cipcipp-150996/databases/(default)/documents'
-      var url = `${baseUrl}/${campaignId}?documentId=${res.transaction_id}`
-      addEntry(body, url, headers, callback)
+        const headers = {
+          'Authorization': `Bearer ${accessToken}`
+        }
+        const baseUrl = 'https://firestore.googleapis.com/v1/projects/cipcipp-150996/databases/(default)/documents'
+        var url = `${baseUrl}/${campaignId}?documentId=${res.transaction_id}`
+        addEntry(body, url, headers, callback)
 
-      url = `${baseUrl}/${campaignId}-sum/`
-      checkSum(url, headers, amount)
+        url = `${baseUrl}/${campaignId}-sum/`
+        checkSum(url, headers, amount)
+      }
     }
   })
 }
@@ -92,7 +93,7 @@ function checkSum(url, headers, addition) {
       let data = '0'
       try {
         data = miaw.documents[0].fields.sum.integerValue
-      } catch (e) {}
+      } catch (e) { }
       const currentSum = Number(data)
       const nextSum = currentSum + addition
       print(`next sum would be ${nextSum}`)
