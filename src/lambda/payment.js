@@ -129,12 +129,14 @@ function addEntry(body, url, headers, callback) {
   })
     .then(response => response.json())
     .then(data => {
+      print(JSON.stringify(data))
       callback(null, {
         statusCode: 200,
         body: `${JSON.stringify(data)}`
       })
     })
     .catch((e) => {
+      print(e)
       callback(null, {
         statusCode: 400,
         body: `error ${e}`
