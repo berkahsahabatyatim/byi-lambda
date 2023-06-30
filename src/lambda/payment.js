@@ -89,8 +89,10 @@ function checkSum(url, headers, addition) {
     method: 'GET'
   }).then(response => response.json())
     .then((miaw) => {
-      let data = miaw.documents[0].fields.sum.integerValue
-      if (data === undefined) data = '0';
+      let data = '0'
+      try {
+        data = miaw.documents[0].fields.sum.integerValue
+      } catch (e) {}
       const currentSum = Number(data)
       const nextSum = currentSum + addition
       print(`next sum would be ${nextSum}`)
