@@ -96,8 +96,9 @@ function checkSum(url, headers, addition, campaignId, callback) {
     .then((miaw) => {
       let data = '0'
       let id = '1'
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 5; i++) {
         try {
+          if (campaignId.includes("dev-")) campaignId = "dev"
           if (miaw.documents[i].fields.code.stringValue === campaignId) {
             let basePath = url.replace('https://firestore.googleapis.com/v1/', '')
             id = miaw.documents[i].name.replace(basePath, '')
