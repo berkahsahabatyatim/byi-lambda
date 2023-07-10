@@ -78,31 +78,50 @@ export function handler(event, context, callback) {
         addEntry(body, url, headers, callback)
 
         url = `${baseUrl}/${campaignId}-sum/`
-        checkSum(url, headers, amount)
+        url = `${baseUrl}/front-end-program/`
+        checkSum(url, headers, amount, campaignId, callback)
       }
     }
   })
 }
+// projects/cipcipp-150996/databases/(default)/documents/front-end-program/
+// projects/cipcipp-150996/databases/(default)/documents/front-end-program/GPqnagtqrc6sBSYMOtnj
+// projects/cipcipp-150996/databases/(default)/documents/front-end-program/
 
-function checkSum(url, headers, addition) {
+function checkSum(url, headers, addition, campaignId, callback) {
   fetch(url, {
     headers: headers,
     method: 'GET'
   }).then(response => response.json())
     .then((miaw) => {
       let data = '0'
-      try {
-        data = miaw.documents[0].fields.sum.integerValue
-      } catch (e) { }
-      const currentSum = Number(data)
-      const nextSum = currentSum + addition
-      print(`next sum would be ${nextSum}`)
-      addSum(url, headers, nextSum)
+      let id = '1'
+      for (let i = 0; i < 4; i++) {
+        try {
+          if (miaw.documents[i].fields.code.stringValue === campaignId) {
+            let basePath = url.replace('https://firestore.googleapis.com/v1/', '')
+            id = miaw.documents[i].name.replace(basePath, '')
+            data = miaw.documents[i].fields.sum.integerValue
+            break
+          }
+        } catch (e) { }
+      }
+      if (id === '1') {
+        callback(null, {
+          statusCode: 400,
+          body: 'no id found'
+        })
+      } else {
+        const currentSum = Number(data)
+        const nextSum = currentSum + addition
+        print(`next sum would be ${nextSum} to ${id}`)
+        addSum(url, headers, nextSum, id)
+      }
     })
 }
 
-function addSum(url, headers, nextSum) {
-  fetch(`${url}sum?updateMask.fieldPaths=sum`, {
+function addSum(url, headers, nextSum, id) {
+  fetch(`${url}${id}?updateMask.fieldPaths=sum`, {
     headers: headers,
     method: 'PATCH',
     body: JSON.stringify({
